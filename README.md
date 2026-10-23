@@ -1,30 +1,64 @@
-# RoleVault — Role-Isolated Memory Governance
+<div align="center">
 
-RoleVault is a reference implementation for conservative memory admission, temporal conflict handling, provenance-aware decisions, sensitive-data rejection, and auditable forgetting.
+# RoleVault
+### 让每一次记住都有理由，让每一次遗忘都有依据。
 
-## Included
+**Role-Isolated Memory Governance · V2.7 Fusion**
 
-- src/rolevault/: core V2.7-Fusion reference implementation.
-- tests/: focused unit and regression tests for the core memory-governance logic.
-- app/decision-lab.html and app/lab/: a static, deterministic decision-lab demo using synthetic scenarios only.
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Core tests](https://img.shields.io/badge/111_core_tests-passing-2A9D8F)](#本地运行)
+[![Demo](https://img.shields.io/badge/Decision_Lab-synthetic-1D5365)](app/decision-lab.html)
 
-## Quick start
+[核心源码](src/rolevault/) · [决策实验室](app/decision-lab.html) · [测试](tests/) · [使用说明](#本地运行)
 
-Python 3.10+; core implementation uses the Python standard library.
+</div>
+
+---
+
+## 为什么需要 RoleVault？
+
+长期记忆的关键不只是保存信息，还包括**哪些值得记、谁有权修改、旧消息何时失效、用户要求遗忘后如何防止旧数据复活**。
+
+| 风险 | 设计机制 |
+|---|---|
+| 不可信文本冒充记忆所有人 | 可信来源与角色授权检查 |
+| 旧消息覆盖新事实 | 时态判断、有效日期、冲突处理 |
+| 密钥被写进长期记忆 | 存储前拒绝敏感信息 |
+| 删除后再次恢复旧事实 | 遗忘标记与旧消息回放抑制 |
+| 看不到系统如何决定 | 审计动作、状态哈希与读回校验 |
+
+## 核心决策流程
+
+**可信身份 → 数据允许 → 时态检查 → 确认/澄清 → 记忆更新、拒绝或遗忘 → 读回核验**
+
+代码结构：
+- [V2.7 时态网关](src/rolevault/fusion_temporal_gateway_v27.py)
+- [记忆核心](src/rolevault/)
+- [离线合成场景实验室](app/decision-lab.html)
+- [核心回归测试](tests/)
+
+## 本地运行
+
+Python 3.10+，核心实现不需要第三方依赖。
 
     $env:PYTHONPATH = "src"
     python -m unittest discover -s tests -v
 
-To view the synthetic decision lab:
+打开浏览器合成实验室：
 
     python -m http.server 8000 --directory app
 
-Open http://127.0.0.1:8000/decision-lab.html.
+访问 http://127.0.0.1:8000/decision-lab.html 。此实验室**不连接真实 AI，也不连接真实 TeleAgent**。
 
-## Security and evidence boundaries
+**公开精简版已通过 111 项核心测试。**
 
-- The demo uses synthetic scenarios; it does not call a live model or authenticate a real TeleAgent account.
-- This repository intentionally excludes USER.md, personal memory files, native conversation logs, real snapshots, local app/data.json, evidence bundles, PDFs, videos, and credentials.
-- Trusted identity must be supplied by a separately authenticated host; a role label inside chat text is not authentication.
-- A local reference implementation does not prove account-global isolation, external cache erasure, or platform-native integration.
-- The R04 transcription/hash exception from the private evaluation workspace is not part of the public product code and is not silently represented as a pass.
+## 真实性与隐私
+
+- 此仓库公开的是记忆治理**参考实现**，不是 TeleAgent 原生后端。
+- 本地角色隔离演示不等于跨真实受信账号的安全测试。
+- 不宣称外部缓存已被删除，也不把合成场景写成真实评委测试。
+- 不发布个人记忆、USER.md、真实会话日志、快照、API Key、比赛 PDF 或视频。
+
+---
+
+<div align="center"><sub>RoleVault · Memory with provenance · 2026</sub></div>

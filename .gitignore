@@ -14,3 +14,21 @@ app/data.json
 snapshots/
 logs/
 *.log
+
+# Additional secrets and generated data
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.sqlite
+*.db
+.npmrc
+**/auth.json
+**/credentials.json
+private/
+secrets/
+credentials/
+coverage/
