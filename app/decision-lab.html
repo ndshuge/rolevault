@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>RoleVault / Memory Decision Lab</title>
+<link rel="stylesheet" href="./lab/lab.css">
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+ <a class="brand" href="./decision-lab.html" aria-label="RoleVault决策实验室首页">
+  <span class="brand-mark"><span class="mark-inner">R</span></span>
+  <span><strong>RoleVault</strong><small>Memory Governance System</small></span>
+ </a>
+ <nav class="topnav" aria-label="导航">
+  <a class="navlink active" href="./decision-lab.html">决策实验室</a>
+  <a class="navlink" href="https://github.com/ndshuge/rolevault">源码仓库 ↗</a>
+ </nav>
+ <span class="environment"><span class="live-dot"></span>离线可交互 · 非真实模型调用</span>
+</header>
+<main>
+ <section class="hero">
+  <div>
+   <div class="eyebrow"><span class="dash"></span> EXPERIMENT 03 <span class="dim">/</span> TRUSTED MEMORY</div>
+   <h1>让每一次<span class="green">记住</span>，都有理由。<br>让每一次<span class="blue">遗忘</span>，都有证据。</h1>
+   <p>体验角色隔离的记忆决策路径：可信来源验证、敏感信息过滤、长期价值判断、原子更新和主动遗忘。所有操作仅作用于浏览器内的合成示例。</p>
+  </div>
+  <div class="hero-stats" aria-label="内部实验指标">
+   <div class="hero-stat"><small>HanaAgent 内部留出集</small><strong id="metric-accuracy">30<span>/30</span></strong><span>自编案例 · 非官方得分</span></div>
+   <div class="hero-stat"><small>本地单元回归</small><strong id="metric-tests">128<span> PASS</span></strong><span>来源：当前本地验收记录</span></div>
+  </div>
+ </section>
+ <section class="workspace" aria-label="交互式记忆决策演示">
+  <aside class="scenario-panel panel">
+   <div class="panel-heading">
+    <span class="eyebrow tiny">01 / SCENARIO LIBRARY</span>
+    <h2>选择实验场景</h2>
+    <p>点击预设案例，观察决策与存储变化</p>
+   </div>
+   <div id="scenario-list" class="scenario-list" role="group" aria-label="选择案例"></div>
+   <div class="scenario-bottom">
+    <div class="divider-light"></div>
+    <span class="micro-label">安全边界</span>
+    <p>模拟数据与 TeleAgent 官方证据完全分离。此页面不访问 HanaAgent、不发送网络推理请求、不使用浏览器持久存储。</p>
+   </div>
+  </aside>
+  <section class="action-panel panel">
+   <div class="panel-heading flex-heading">
+    <div><span class="eyebrow tiny">02 / DECISION PIPELINE</span><h2>记忆决策链</h2></div>
+    <span id="actor-pill" class="actor-pill"><i></i> 已认证主人（模拟）</span>
+   </div>
+   <div class="input-section">
+    <div class="input-label"><label for="message">当前消息</label><span>可编辑 · 仅预设文本可确定性处理</span></div>
+    <textarea id="message" rows="4" spellcheck="false" maxlength="1200" aria-describedby="input-note"></textarea>
+    <p id="input-note" class="input-note">演示模板：编辑后若不匹配，系统会请求澄清，不会臆造 AI 结论。</p>
+    <div class="button-row">
+     <button id="run" class="primary-btn" type="button">运行决策 <span>→</span></button>
+     <button id="reset" class="ghost-btn" type="button">重置模拟状态 ↺</button>
+    </div>
+   </div>
+   <div class="pipe">
+    <div class="pipe-title"><span class="eyebrow tiny">POLICY EXECUTION</span><span id="pipeline-status">等待输入</span></div>
+    <div class="stage-grid" id="pipeline">
+     <div class="stage"><span class="stage-index">01</span><strong>来源鉴别</strong><small>Identity</small></div>
+     <div class="stage"><span class="stage-index">02</span><strong>敏感审查</strong><small>Privacy</small></div>
+     <div class="stage"><span class="stage-index">03</span><strong>语义判断</strong><small>Policy</small></div>
+     <div class="stage"><span class="stage-index">04</span><strong>状态落盘</strong><small>Store</small></div>
+    </div>
+   </div>
+   <div class="decision-section" id="decision-section" aria-live="polite">
+    <div class="decision-empty" id="decision-empty">
+     <div class="empty-orbit"><span>◎</span></div>
+     <strong>等待第一次决策</strong>
+     <p>选择左侧场景，然后点击「运行决策」</p>
+    </div>
+    <div id="decision-result" class="decision-result hidden">
+     <div class="result-heading"><span class="eyebrow tiny">DECISION OUTPUT</span><span id="result-status" class="result-status">已执行</span></div>
+     <div class="action-hero"><span id="action-glyph" class="action-glyph">+</span><div><strong id="result-action">ADD</strong><small id="result-label">长期记忆新增</small></div></div>
+     <p id="result-reason" class="result-reason"></p>
+     <div id="rule-reason" class="reason-chip"></div>
+     <div class="diff-block">
+      <div class="diff-head"><strong>MEMORY DIFF</strong><span id="diff-status">状态对比</span></div>
+      <div class="diff-grid">
+       <div class="diff-box before"><small>BEFORE · 执行前</small><span id="before-slot" class="diff-slot"></span><strong id="before-value"></strong></div>
+       <div class="diff-box after"><small>AFTER · 执行后</small><span id="after-slot" class="diff-slot"></span><strong id="after-value"></strong></div>
+      </div>
+      <p id="diff-footnote"></p>
+     </div>
+    </div>
+   </div>
+  </section>
+  <aside class="state-panel panel">
+   <div class="panel-heading flex-heading">
+    <div><span class="eyebrow tiny">03 / STATE EXPLORER</span><h2>记忆状态</h2></div>
+    <span class="state-live"><span class="live-dot"></span> In-memory</span>
+   </div>
+   <div class="state-tabs" role="group" aria-label="记忆可见范围">
+    <button type="button" class="switcher active" id="owner-view">主人视图</button>
+    <button type="button" class="switcher" id="visitor-view">访客视图</button>
+   </div>
+   <div class="store-caption"><span>ROLE <strong id="role-label">owner</strong></span><span><strong id="memory-count">4</strong> 个活动槽位</span></div>
+   <div id="memory-list" class="memory-list"></div>
+   <div class="tombstone-section"><div class="tombstone-head"><span>遗忘抑制标记</span><strong id="tombstone-count">0</strong></div>
+    <div id="tombstone-list" class="tombstone-list"><span class="no-data">暂无遗忘记录</span></div>
+    <button id="replay" type="button" class="replay-btn" disabled>模拟旧对话回放 <span>↗</span></button>
+   </div>
+   <div class="audit-block">
+    <div class="audit-title"><span class="eyebrow tiny">ACTION AUDIT</span><span id="audit-count">0 EVENTS</span></div>
+    <div id="audit-list" class="audit-list"><p class="no-data">当前尚无动作记录</p></div>
+   </div>
+  </aside>
+ </section>
+ <section class="bottom-strip">
+  <div class="bottom-point"><span>01</span><div><strong>来源先于内容</strong><p>角色身份由受信系统提供；本页仅模拟角色标签</p></div></div>
+  <div class="bottom-point"><span>02</span><div><strong>最小必要存储</strong><p>敏感凭证和短期闲聊默认不进入长期记忆</p></div></div>
+  <div class="bottom-point"><span>03</span><div><strong>可验证的状态</strong><p>展示前后差异、操作原因和遗忘抑制</p></div></div>
+ </section>
+</main>
+<footer><strong>RoleVault / LOCAL SANDBOX</strong><span>仅用于产品交互示范，不代表 TeleAgent 实际后端、模型实时判断或比赛官方结果。</span><a href="./index.html">查看原生快照观察器 →</a></footer>
+</div>
+<script type="module" src="./lab/lab.js"></script>
+</body></html>

@@ -1,0 +1,15 @@
+{
+  "source": "aggregate_from_local_internal_evidence",
+  "scope": "self_authored_cases_not_official_and_not_external_blind",
+  "holdout": {
+    "total": 30,
+    "correct": 30,
+    "security_checked": 3,
+    "security_correct": 3
+  },
+  "tests": 270,
+  "validation": {
+    "synthetic_lab_only": true,
+    "teleagent_native_injection_verified": false
+  }
+}
