@@ -13,6 +13,12 @@
 
 </div>
 
+## 竞赛公开材料
+
+- [最新作品介绍 PDF（18 页）](competition-materials/RoleVault_V27_R6_18P.pdf)
+- [材料清单、SHA-256 与验证结果](competition-materials/README.md)
+- [公开证据摘要](competition-materials/evidence/PUBLIC_EVIDENCE.md)
+
 ---
 
 ## 为什么需要 RoleVault？
@@ -57,7 +63,7 @@ Python 3.10+，核心实现不需要第三方依赖。
 - 此仓库公开的是记忆治理**参考实现**，不是 TeleAgent 原生后端。
 - 本地角色隔离演示不等于跨真实受信账号的安全测试。
 - 不宣称外部缓存已被删除，也不把合成场景写成真实评委测试。
-- 不发布个人记忆、USER.md、真实会话日志、快照、API Key、比赛 PDF 或视频。
+- 不发布个人记忆、USER.md、真实会话日志、快照、API Key、原始比赛视频。
 
 ---
 
